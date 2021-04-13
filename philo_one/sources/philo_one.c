@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one.c                                        :+:      :+:    :+:   */
+/*   philso_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,17 +12,13 @@
 
 #include "../includes/philo_one.h"
 
-typedef struct	s_phil
+int		my_error(t_phils *phils, char *line)
 {
-	char		*name;
-	int			num_of_phil;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			num_eat;
-}				t_phil;
-
-pthread_t t1;
+	if (phils->phil != NULL)
+		;
+	printf("%s", line);
+	exit(EXIT_FAILURE);
+}
 
 int		ft_strlen(char *str)
 {
@@ -62,61 +58,53 @@ int		ft_atoi(char *str)
 	return (res * neg);
 }
 
-void	*print(void *buf)
+void	my_zero(t_phils *phils)
 {
-	for (size_t i = 0; i < 10; i++)
-	{
-		pthread_detach(t1);
-		write(1, (char*)buf, strlen(buf));
-		usleep(100000);
-	}
-	return NULL;
+	phils->num_of_phil = 0;
+	phils->time_to_die = 0;
+	phils->time_to_eat = 0;
+	phils->time_to_sleep = 0;
+	phils->num_eat = 0;
+	phils->phil = NULL;
 }
 
-int		parse(t_phil *phil, int ac, char **av)
+void	parse(t_phils *phils, int ac, char **av)
 {
 	if (ac == 5 || ac == 6)
 	{
-		phil->name = av[0];
-		phil->num_of_phil = ft_atoi(av[1]);
-		phil->time_to_die = ft_atoi(av[2]);
-		phil->time_to_eat = ft_atoi(av[3]);
-		phil->time_to_sleep = ft_atoi(av[4]);
+		if (ft_atoi(av[1]) < 2 || ft_atoi(av[1]) > 200 || \
+		ft_atoi(av[2]) < 60 || ft_atoi(av[3]) < 60 || \
+		ft_atoi(av[4]) < 60 || (ac == 6 && ft_atoi(av[5]) < 0))
+			my_error(phils, "Bad arguments!\n");
+		phils->num_of_phil = ft_atoi(av[1]);
+		phils->time_to_die = ft_atoi(av[2]) * 1000;
+		phils->time_to_eat = ft_atoi(av[3]) * 1000;
+		phils->time_to_sleep = ft_atoi(av[4]) * 1000;
 		if (ac == 6)
-			phil->num_eat = ft_atoi(av[5]);
-		else
-			phil->num_eat = 0;
-		if (phil->num_of_phil < 2 || phil->num_of_phil > 200 || \
-		phil->time_to_die < 60 || phil->time_to_eat < 60 || \
-		phil->time_to_sleep < 60 || phil->num_eat < 0)
-		{
-			printf("Bad arguments!\n");
-			return (EXIT_FAILURE);
-		}
+			phils->num_eat = ft_atoi(av[5]);
 	}
 	else
-	{
-		printf("Bad arguments!\nOnly 4 or 5 arguments!\n");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+		my_error(phils, "Bad arguments!\nOnly 4 or 5 arguments!\n");
+	if (!(phils->phil = (t_phil*)malloc(sizeof(t_phil) * phils->num_of_phil)))
+		my_error(phils, "Bad malloc!");
 }
+
+
 
 int		main(int ac, char **av)
 {
-	t_phil	phil;
-	char *str1 = "1_2_3_4_5_6_7_8_9\n";
+	t_phils	phils;
 
-	if (parse(&phil, ac, av))
-		return (EXIT_FAILURE);
-	pthread_create(&t1, NULL, print, (void*)str1);
-	//pthread_join(t1, NULL);
-	usleep(1000000);
+	my_zero(&phils);
+	parse(&phils, ac, av);
+
 	return (EXIT_SUCCESS);
 }
 
-//timestamp_in_ms X has taken a fork
-//timestamp_in_ms X is eating
-//timestamp_in_ms X is sleeping
-//timestamp_in_ms X is thinking
-//timestamp_in_ms X died
+/*
+** timestamp_in_ms X has taken a fork
+** timestamp_in_ms X is eating
+** timestamp_in_ms X is sleeping
+** timestamp_in_ms X is thinking
+** timestamp_in_ms X died
+*/
