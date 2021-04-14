@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/02/12 19:15:12 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/14 20:53:06 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,29 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct		s_phil
+typedef struct		s_fork
 {
-	int				pos;
-	int				lfork;
-	int				rfork;
-	int				without_eat;
-	pthread_mutex_t	lf;
-	pthread_mutex_t	rf;
-}					t_phil;
+	int				fork;
+	pthread_mutex_t	mutex_f;
+}					t_fork;
 
 
 typedef struct		s_phils
 {
+	int				pos;
 	int				num_of_phil;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_eat;
-	int				lfork;
-	int				rfork;
-	t_phil			*phil;
-	pthread_mutex_t	lf;
-	pthread_mutex_t	rf;
-	pthread_t		f;
+	int				without_eat;
+	struct timeval	start_t;
+	struct timeval	end_eat;
+	pthread_t		thread;
+	pthread_t		thread_d;
+	pthread_mutex_t	print_mutex;
+	t_fork			*lfork;
+	t_fork			*rfork;
 }					t_phils;
 
 

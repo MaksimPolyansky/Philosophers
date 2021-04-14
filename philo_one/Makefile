@@ -1,10 +1,10 @@
 NAME		=	philo_one
 
-HEADER		=	./includes/.h
+HEADER		=	./includes/philo_one.h
 
 CC			=	gcc
 
-FLAGS		=	-Werror -Wall -Wextra
+FLAGS		=	-Werror -Wall -Wextra -pthread
 
 SRCS		=	./sources/philo_one.c
 
