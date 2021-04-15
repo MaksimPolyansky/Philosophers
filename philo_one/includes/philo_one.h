@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/15 21:40:02 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/15 23:38:43 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct		s_fork
 	int				fork;
 	pthread_mutex_t	mutex_f;
 }					t_fork;
-
 
 typedef struct		s_phils
 {
@@ -47,5 +46,13 @@ typedef struct		s_phils
 	t_fork			*rfork;
 }					t_phils;
 
+int					ft_strlen(char *str);
+int					ft_strcmp(const char *s1, const char *s2);
+int					ft_atoi(char *str);
+void				*died(void *data);
+t_phils				**parse(int ac, char **av);
+__uint64_t			my_time(void);
+
+void				*run(void *data);
 
 #endif

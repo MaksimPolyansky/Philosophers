@@ -6,7 +6,11 @@ CC			=	gcc
 
 FLAGS		=	-Werror -Wall -Wextra -pthread
 
-SRCS		=	./sources/philo_one.c
+SRCS		=	./sources/philo_one.c \
+				./sources/died.c \
+				./sources/parse.c \
+				./sources/utils.c \
+				./sources/
 
 OBJS		=	$(SRCS:%.c=%.o)
 
