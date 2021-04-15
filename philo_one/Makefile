@@ -30,6 +30,6 @@ fclean: clean
 	@rm $(NAME)
 
 de:
-	gcc -g $(SRCS)
+	gcc -g -pthread $(SRCS)
 
 .PHONY: all clean fclean re
