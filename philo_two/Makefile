@@ -1,6 +1,6 @@
 NAME		=	philo_one
 
-HEADER		=	./includes/philo_one.h
+HEADER		=	./includes/philo_two.h
 
 CC			=	gcc
 

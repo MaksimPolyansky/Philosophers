@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:26:10 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/15 23:35:18 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/16 22:41:18 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ __uint64_t	my_time(void)
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return ((time.tv_sec * (__uint64_t)1000) + (_time.tv_usec / 1000));
+	return ((time.tv_sec * (__uint64_t)1000) + (time.tv_usec / 1000));
 }
 
 int			ft_strlen(char *str)
