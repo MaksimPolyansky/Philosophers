@@ -12,18 +12,6 @@
 
 #include "../includes/philo_one.h"
 
-void	print_info(t_phils *phil, char *line)
-{
-	pthread_mutex_lock(phil->print_mutex);
-	if (*phil->die == 1)
-	{
-		pthread_mutex_unlock(phil->print_mutex);
-		return ;
-	}
-	printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);
-	pthread_mutex_unlock(phil->print_mutex);
-}
-
 void	*run(void *data)
 {
 	t_phils	*phil;
@@ -107,7 +95,6 @@ int		main(int ac, char **av)
 	k = -1;
 	while (++k < phils[0]->num_of_phil)
 		pthread_create(&phils[k]->thread_d, NULL, died, phils[k]);
-
 	z = -1;
 	while (++z < phils[0]->num_of_phil)
 	{

@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:15:48 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/15 23:38:34 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/16 19:22:21 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,16 @@ int			ft_atoi(char *str)
 			return (0);
 	}
 	return (res * neg);
+}
+
+void		print_info(t_phils *phil, char *line)
+{
+	pthread_mutex_lock(phil->print_mutex);
+	if (*phil->die == 1)
+	{
+		pthread_mutex_unlock(phil->print_mutex);
+		return ;
+	}
+	printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);
+	pthread_mutex_unlock(phil->print_mutex);
 }

@@ -10,7 +10,7 @@ SRCS		=	./sources/philo_one.c \
 				./sources/died.c \
 				./sources/parse.c \
 				./sources/utils.c \
-				./sources/
+				#./sources/
 
 OBJS		=	$(SRCS:%.c=%.o)
 

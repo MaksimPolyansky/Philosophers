@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:21:52 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/15 23:22:37 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/16 19:32:09 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ t_phils	**parse(int ac, char **av)
 		}
 	}
 	else
-		exit(EXIT_FAILURE);
+		return (NULL);
 	return (phils);
 }
