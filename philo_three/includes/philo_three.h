@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/16 22:30:17 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/16 22:45:19 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int					died(t_phils *phil);
 void				*run(void *data);
 void				print_info(t_phils *phil, char *line);
 __uint64_t			my_time(void);
+void				*error_arg(char *line);
 
 #endif
