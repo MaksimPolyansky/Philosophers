@@ -1,4 +1,4 @@
-NAME		=	philo_one
+NAME		=	philo_two
 
 HEADER		=	./includes/philo_two.h
 
@@ -9,9 +9,9 @@ FLAGS		=	-Werror -Wall -Wextra -pthread
 SRCS		=	./sources/philo_two.c \
 				./sources/died.c \
 				./sources/parse.c \
-				./sources/print_info.c \
-				./sources/run.c \
 				./sources/utils.c \
+				./sources/errors.c \
+				./sources/inits.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
