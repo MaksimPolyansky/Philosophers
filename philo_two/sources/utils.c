@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:26:10 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 08:55:37 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/18 09:35:42 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,23 @@ int	ft_strcmp(const char *s1, const char *s2)
 int	ft_atoi(char *str)
 {
 	int			i;
+	int			p;
 	long long	res;
-	long long	neg;
 
 	i = 0;
+	p = 0;
 	res = 0;
-	neg = 1;
 	while (str[i] == '\n' || str[i] == '\r' || str[i] == '\v' || str[i] == '\t'
-		|| str[i] == '\f' || str[i] == ' ' || str[i] == '0')
-		i++;
-	if (str[i] == '-')
-		neg = -1;
-	if (str[i] == '-' || str[i] == '+')
+		|| str[i] == '\f' || str[i] == ' ')
 		i++;
 	while ((str[i] >= '0') && (str[i] <= '9'))
-		res = (res * 10) + (str[i++] - '0');
-	if (i >= 19)
 	{
-		if (neg == 1)
-			return (-1);
-		else if (i > 19)
-			return (0);
+		p = 1;
+		res = (res * 10) + (str[i++] - '0');
 	}
-	return (res * neg);
+	if (p == 0)
+		return (-1);
+	return (res);
 }
 
 void	print_info(t_phils *phil, char *line)
