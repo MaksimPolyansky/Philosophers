@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 06:43:56 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 07:29:41 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/18 21:07:21 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	init_mutex(t_phils ***phils, t_fork **fork_s)
 
 	(*fork_s) = (t_fork *)malloc(sizeof(t_fork));
 	if ((*fork_s) == NULL)
-		return ((int)my_errors(&(*phils), "Bad malloc mutex!"));
+		return (my_errors(&(*phils), "Bad malloc mutex!"));
 	if (pthread_mutex_init(&forks, NULL))
-		return ((int)my_errors(&(*phils), "Bad pthread init mutex!"));
+		return (my_errors(&(*phils), "Bad pthread init mutex!"));
 	(*fork_s)->mutex_f = forks;
 	(*fork_s)->fork = 1;
 	return (1);
@@ -55,11 +55,11 @@ int	init_print(t_phils ***phils)
 	w = (int *)malloc(sizeof(int));
 	mutex_t = malloc(sizeof(pthread_mutex_t));
 	if (d == 0 || w == 0 || mutex_t == NULL)
-		return ((int)my_errors(&(*phils), "Bad malloc print!"));
+		return (my_errors(&(*phils), "Bad malloc print!"));
 	*d = 0;
 	*w = 0;
 	if (pthread_mutex_init(mutex_t, NULL))
-		return ((int)my_errors(&(*phils), "Bad pthread init print!"));
+		return (my_errors(&(*phils), "Bad pthread init print!"));
 	p = -1;
 	start = my_time();
 	while (++p < (*phils)[0]->num_of_phil)
@@ -81,13 +81,13 @@ int	to_go(t_phils ***phils)
 	while (++k < (*phils)[0]->num_of_phil)
 	{
 		if (pthread_create(&(*phils)[k]->thread_d, NULL, died, (*phils)[k]))
-			return ((int)my_errors(&(*phils), "Bad pthread create!"));
+			return (my_errors(&(*phils), "Bad pthread create!"));
 	}
 	z = -1;
 	while (++z < (*phils)[0]->num_of_phil)
 	{
 		if (pthread_join((*phils)[z]->thread_d, NULL))
-			return ((int)my_errors(&(*phils), "Bad pthread join!"));
+			return (my_errors(&(*phils), "Bad pthread join!"));
 	}
 	return (1);
 }
