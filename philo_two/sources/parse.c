@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:29:15 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 08:55:07 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/18 21:18:59 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ int	parse(t_phils ***phils, int ac, char **av)
 		if (ft_atoi(av[1]) < 2 || ft_atoi(av[1]) > 200 || \
 		ft_atoi(av[2]) < 60 || ft_atoi(av[3]) < 60 || \
 		ft_atoi(av[4]) < 60 || (ac == 6 && ft_atoi(av[5]) < 0))
-			return ((int)error_arg("Bad arguments!"));
+			return (error_arg("Bad arguments!"));
 		(*phils) = (t_phils **)malloc(sizeof(t_phils *) * ft_atoi(av[1]));
 		if ((*phils) == NULL)
-			return ((int)error_arg("Bad malloc!"));
+			return (error_arg("Bad malloc!"));
 		i = -1;
 		while (++i < ft_atoi(av[1]))
 		{
 			if (!my_zero(&(*phils)[i], ac, av))
-				return ((int)my_errors(&(*phils), "Bad malloc!"));
+				return (my_errors(&(*phils), "Bad malloc!"));
 			(*phils)[i]->pos = i;
 		}
 	}
 	else
-		return ((int)error_arg("Bad arguments!"));
+		return (error_arg("Bad arguments!"));
 	return (1);
 }
