@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 05:13:24 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 05:13:52 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/18 07:29:13 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@ void	*my_errors(t_phils ***phils, char *line)
 	i = (*phils)[0]->num_of_phil;
 	if (*phils)
 	{
+		if ((*phils)[0]->print_mutex)
+			free((*phils)[0]->print_mutex);
+		if ((*phils)[0]->die)
+			free((*phils)[0]->die);
+		if ((*phils)[0]->eat)
+			free((*phils)[0]->eat);
 		while (--i)
 		{
 			if ((*phils)[i]->lfork)
 				free((*phils)[i]->lfork);
-			if ((*phils)[i]->rfork)
-				free((*phils)[i]->rfork);
-			if ((*phils)[i]->print_mutex)
-				free((*phils)[i]->print_mutex);
-			if ((*phils)[i]->die)
-				free((*phils)[i]->die);
-			if ((*phils)[i]->eat)
-				free((*phils)[i]->eat);
+			if ((*phils)[i])
+				free((*phils)[i]);
 		}
+		free(*phils);
 	}
 	write(2, line, ft_strlen(line));
 	write(2, "\n", 1);

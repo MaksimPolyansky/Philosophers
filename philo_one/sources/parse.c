@@ -6,17 +6,17 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:21:52 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 05:16:37 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/18 07:07:39 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_one.h"
 
-void	my_zero(t_phils **phil, int ac, char **av)
+int	my_zero(t_phils **phil, int ac, char **av)
 {
 	*(phil) = (t_phils *)malloc(sizeof(t_phils));
 	if (*(phil) == NULL)
-		exit(EXIT_FAILURE);
+		return (0);
 	(*phil)->num_of_phil = ft_atoi(av[1]);
 	(*phil)->time_to_die = (size_t)ft_atoi(av[2]);
 	(*phil)->time_to_eat = ft_atoi(av[3]);
@@ -31,6 +31,7 @@ void	my_zero(t_phils **phil, int ac, char **av)
 	(*phil)->print_mutex = NULL;
 	(*phil)->die = NULL;
 	(*phil)->eat = NULL;
+	return (1);
 }
 
 int	parse(t_phils ***phils, int ac, char **av)
@@ -49,7 +50,8 @@ int	parse(t_phils ***phils, int ac, char **av)
 		i = -1;
 		while (++i < ft_atoi(av[1]))
 		{
-			my_zero(&(*phils)[i], ac, av);
+			if (!my_zero(&(*phils)[i], ac, av))
+				return ((int)my_errors(&(*phils), "Bad malloc!"));
 			(*phils)[i]->pos = i;
 		}
 	}

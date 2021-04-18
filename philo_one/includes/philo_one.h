@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 05:15:29 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/18 06:45:42 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ size_t				my_time(void);
 void				print_info(t_phils *phil, char *line);
 void				*error_arg(char *line);
 void				*my_errors(t_phils ***phils, char *line);
-
+int					init_mutex(t_phils ***phils, t_fork **fork_s);
+int					init_forks(t_phils ***phils);
+int					init_print(t_phils ***phils);
+int					to_go(t_phils ***phils);
 void				*run(void *data);
 
 #endif
