@@ -6,31 +6,35 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:29:15 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/16 22:45:51 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/20 21:34:24 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_three.h"
 
-void	my_zero(t_phils **phil, int ac, char **av)
+int	my_zero(t_phils **phil, int ac, char **av)
 {
-	*(phil) = (t_phils*)malloc(sizeof(t_phils));
+	*(phil) = (t_phils *)malloc(sizeof(t_phils));
 	if (*(phil) == NULL)
-		exit(EXIT_FAILURE);
+		return (0);
 	(*phil)->num_of_phil = ft_atoi(av[1]);
-	(*phil)->time_to_die = (__uint64_t)ft_atoi(av[2]);
+	(*phil)->time_to_die = (size_t)ft_atoi(av[2]);
 	(*phil)->time_to_eat = ft_atoi(av[3]);
 	(*phil)->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 		(*phil)->num_eat = ft_atoi(av[5]);
 	else
-		(*phil)->num_eat = 0;
+		(*phil)->num_eat = -1;
 	(*phil)->count_eat = 0;
+	(*phil)->die = NULL;
+	(*phil)->eat = NULL;
+	(*phil)->print_sem = NULL;
+	(*phil)->forks = NULL;
+	return (1);
 }
 
-t_phils	**parse(int ac, char **av)
+int	parse(t_phils ***phils, int ac, char **av)
 {
-	t_phils	**phils;
 	int		i;
 
 	if (ac == 5 || ac == 6)
@@ -38,18 +42,19 @@ t_phils	**parse(int ac, char **av)
 		if (ft_atoi(av[1]) < 2 || ft_atoi(av[1]) > 200 || \
 		ft_atoi(av[2]) < 60 || ft_atoi(av[3]) < 60 || \
 		ft_atoi(av[4]) < 60 || (ac == 6 && ft_atoi(av[5]) < 0))
-			return ((t_phils**)error_arg("Bad arguments!"));
-		phils = (t_phils**)malloc(sizeof(t_phils*) * ft_atoi(av[1]));
-		if (phils == NULL)
-			exit(EXIT_FAILURE);
+			return (error_arg("Bad arguments!"));
+		(*phils) = (t_phils **)malloc(sizeof(t_phils *) * ft_atoi(av[1]));
+		if ((*phils) == NULL)
+			return (error_arg("Bad malloc!"));
 		i = -1;
 		while (++i < ft_atoi(av[1]))
 		{
-			my_zero(&phils[i], ac, av);
-			phils[i]->pos = i;
+			if (!my_zero(&(*phils)[i], ac, av))
+				return (my_errors(&(*phils), "Bad malloc!"));
+			(*phils)[i]->pos = i;
 		}
 	}
 	else
-		return ((t_phils**)error_arg("Bad arguments!"));
-	return (phils);
+		return (error_arg("Bad arguments!"));
+	return (1);
 }

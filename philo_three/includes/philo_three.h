@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/16 22:45:19 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/20 21:37:10 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,47 @@
 # include <sys/time.h>
 # include <semaphore.h>
 # include <fcntl.h>
-# include <sys/wait.h>
 # include <signal.h>
+# include <sys/wait.h>
 
-typedef struct		s_phils
+typedef struct s_all
+{
+	pid_t			*all_pid;
+	size_t			phils;
+}					t_all;
+
+typedef struct s_phils
 {
 	int				pos;
 	int				num_of_phil;
-	__uint64_t		time_to_die;
+	size_t			time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_eat;
 	int				count_eat;
 	int				*die;
 	int				*eat;
-	__uint64_t		start_t;
-	__uint64_t		end_eat;
+	size_t			start_t;
+	size_t			end_eat;
 	pthread_t		thread;
-	pid_t			fork_d;
+	pthread_t		thread_d;
 	sem_t			*print_sem;
 	sem_t			*forks;
-	sem_t			*dieds;
-	sem_t			*eats;
 }					t_phils;
 
 int					ft_strlen(char *str);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(char *str);
-t_phils				**parse(int ac, char **av);
-int					died(t_phils *phil);
+int					parse(t_phils ***phils, int ac, char **av);
+void				*died(void *data);
 void				*run(void *data);
 void				print_info(t_phils *phil, char *line);
-__uint64_t			my_time(void);
-void				*error_arg(char *line);
+size_t				my_time(void);
+int					error_arg(char *line);
+int					my_errors(t_phils ***phils, char *line);
+void				to_go(t_phils **phils);
+int					init_print(t_phils ***phils, t_all *all);
+int					init_forks(t_phils ***phils);
+void				to_end(t_phils ***phils, t_all *all);
 
 #endif

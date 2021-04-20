@@ -5,160 +5,77 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 22:57:59 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/16 23:02:55 by heusebio         ###   ########.fr       */
+/*   Created: 2021/04/18 09:08:58 by heusebio          #+#    #+#             */
+/*   Updated: 2021/04/20 21:41:52 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_three.h"
 
-void	*count_eat(void *data)
+void	my_free(t_phils ***phils)
 {
-	t_phils		*phil;
-	int			cout;
+	int	i;
 
-	phil = (t_phils*)data;
-	cout = 0;
-	while (phil->num_of_phil != cout)
+	i = (*phils)[0]->num_of_phil;
+	if (*phils)
 	{
-		sem_wait(phil->eats);
-		cout++;
+		sem_close((*phils)[0]->print_sem);
+		sem_close((*phils)[0]->forks);
+		if ((*phils)[0]->die)
+			free((*phils)[0]->die);
+		if ((*phils)[0]->eat)
+			free((*phils)[0]->eat);
+		while (--i)
+		{
+			if ((*phils)[i])
+				free((*phils)[i]);
+		}
+		free(*phils);
 	}
-	*phil->eat = 1;
+	exit(0);
+}
+
+void	to_eat(t_phils **phil)
+{
+	sem_wait((*phil)->forks);
+	sem_wait((*phil)->forks);
+	print_info((*phil), "has taken a forks");
+	(*phil)->end_eat = my_time();
+	print_info((*phil), "is eating");
+	usleep((*phil)->time_to_eat * 1000);
+	sem_post((*phil)->forks);
+	sem_post((*phil)->forks);
+	(*phil)->count_eat++;
+}
+
+void	*run(void *data)
+{
+	t_phils	*phil;
+
+	phil = (t_phils *)data;
+	phil->end_eat = my_time();
+	if (phil->pos % 2)
+		usleep(100);
+	while (1)
+	{
+		print_info(phil, "is thinking");
+		to_eat(&phil);
+		print_info(phil, "is sleeping");
+		usleep(phil->time_to_sleep * 1000);
+	}
 	return (NULL);
 }
 
-void	*died_phil(void *data)
-{
-	t_phils		*phil;
-
-	phil = (t_phils*)data;
-	sem_wait(phil->dieds);
-	*phil->die = 1;
-	return (NULL);
-}
-
-void	my_open_unlink(t_phils ***phils)
-{
-	int		i;
-
-	(*phils)[0]->print_sem = sem_open("Phils", O_CREAT, 0600, 1);
-	sem_unlink("Phils");
-	(*phils)[0]->forks = sem_open("Forks", O_CREAT, 0600, (*phils)[0]->num_of_phil);
-	sem_unlink("Forks");
-	(*phils)[0]->eats = sem_open("Eets", O_CREAT, 0600, 0);
-	sem_unlink("Eats");
-	(*phils)[0]->dieds = sem_open("Deads", O_CREAT, 0600, 0);
-	sem_unlink("Deads");
-	i = 0;
-	while (++i < (*phils)[0]->num_of_phil)
-	{
-		(*phils)[i]->print_sem = (*phils)[0]->print_sem;
-		(*phils)[i]->forks = (*phils)[0]->forks;
-		(*phils)[i]->eats = (*phils)[0]->eats;
-		(*phils)[i]->dieds = (*phils)[0]->dieds;
-	}
-}
-
-int		eat_die(t_phils ***phils)
-{
-	int		*d;
-	int		*w;
-	int		p;
-	__uint64_t	start;
-
-	d = (int*)malloc(sizeof(int));
-	w = (int*)malloc(sizeof(int));
-	if (d == 0 || w == 0)
-		exit(EXIT_FAILURE);
-	*d = 0;
-	*w = 0;
-	p = -1;
-	start = my_time();
-	while (++p < (*phils)[0]->num_of_phil)
-	{
-		(*phils)[p]->die = d;
-		(*phils)[p]->eat = w;
-		(*phils)[p]->start_t = start;
-	}
-}
-
-int		main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_phils	**phils;
-	// int		i;
-	// int		p;
-	int		k;
-	int		z;
-	// int		*d;
-	// int		*w;
-	int		stat;
-	// __uint64_t	start;
+	t_all	all;
 
-	if ((phils = parse(ac, av)))
-	{
-		// phils[0]->print_sem = sem_open("Phils", O_CREAT, 0600, 1);
-		// sem_unlink("Phils");
-		// phils[0]->forks = sem_open("Forks", O_CREAT, 0600, phils[0]->num_of_phil);
-		// sem_unlink("Forks");
-		// phils[0]->eats = sem_open("Eets", O_CREAT, 0600, 0);
-		// sem_unlink("Eats");
-		// phils[0]->dieds = sem_open("Deads", O_CREAT, 0600, 0);
-		// sem_unlink("Deads");
-		// i = 0;
-		// while (++i < phils[0]->num_of_phil)
-		// {
-		// 	phils[i]->print_sem = phils[0]->print_sem;
-		// 	phils[i]->forks = phils[0]->forks;
-		// 	phils[i]->eats = phils[0]->eats;
-		// 	phils[i]->dieds = phils[0]->dieds;
-		// }
-		my_open_unlink(&phils);
-		// d = (int*)malloc(sizeof(int));
-		// w = (int*)malloc(sizeof(int));
-		// if (d == 0 || w == 0)
-		// 	exit(EXIT_FAILURE);
-		// *d = 0;
-		// *w = 0;
-		// p = -1;
-		// start = my_time();
-		// while (++p < phils[0]->num_of_phil)
-		// {
-		// 	phils[p]->die = d;
-		// 	phils[p]->eat = w;
-		// 	phils[p]->start_t = start;
-		// }
-		eat_die(&phils);
-		k = -1;
-		while (++k < phils[0]->num_of_phil)
-		{
-			phils[k]->fork_d = fork();
-			if (phils[k]->fork_d == 0)
-			{
-				died(phils[k]);
-			}
-		}
-		pthread_t	*t1;
-		pthread_t	*t2;
-		t1 = malloc(sizeof(pthread_t));
-		t2 = malloc(sizeof(pthread_t));
-		if (phils[0]->num_eat != 0)
-			pthread_create(t1, NULL, count_eat, phils[0]);
-		pthread_create(t2, NULL, died_phil, phils[0]);
-		while (!waitpid(0, &stat, WNOHANG))
-		{
-			if (*phils[0]->eat || *phils[0]->die)
-				break;
-		}
-		z = -1;
-		while (++z < phils[0]->num_of_phil)
-			kill(phils[z]->fork_d, SIGKILL);
-		sem_close(phils[0]->print_sem);
-		sem_close(phils[0]->forks);
-		sem_close(phils[0]->dieds);
-		sem_close(phils[0]->eats);
-	}
-	else
-		return (EXIT_FAILURE);
+	if (!parse(&phils, ac, av))
+		exit(1);
+	all.phils = phils[0]->num_of_phil;
+	if (!init_forks(&phils) || !init_print(&phils, &all))
+		exit(1);
+	my_free(&phils);
 	return (EXIT_SUCCESS);
 }
