@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:26:10 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/19 20:10:24 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/21 20:23:16 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_atoi(char *str)
 void	print_info(t_phils *phil, char *line)
 {
 	sem_wait(phil->print_sem);
-	if (*phil->die == 1)
+	if (phil->die == 1)
 	{
 		sem_post(phil->print_sem);
 		return ;

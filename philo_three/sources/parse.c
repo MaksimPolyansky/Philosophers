@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:29:15 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/20 21:34:24 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/21 19:17:11 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	my_zero(t_phils **phil, int ac, char **av)
 	else
 		(*phil)->num_eat = -1;
 	(*phil)->count_eat = 0;
-	(*phil)->die = NULL;
-	(*phil)->eat = NULL;
+	(*phil)->die = 0;
+	// (*phil)->eat = NULL;
 	(*phil)->print_sem = NULL;
 	(*phil)->forks = NULL;
 	return (1);

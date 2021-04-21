@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/20 21:37:10 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:11:36 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_phils
 	int				time_to_sleep;
 	int				num_eat;
 	int				count_eat;
-	int				*die;
-	int				*eat;
+	int				die;
+	// int				*eat;
 	size_t			start_t;
 	size_t			end_eat;
 	pthread_t		thread;
@@ -54,7 +54,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(char *str);
 int					parse(t_phils ***phils, int ac, char **av);
 void				*died(void *data);
-void				*run(void *data);
+void				run(t_phils	*phil);
 void				print_info(t_phils *phil, char *line);
 size_t				my_time(void);
 int					error_arg(char *line);
@@ -63,5 +63,6 @@ void				to_go(t_phils **phils);
 int					init_print(t_phils ***phils, t_all *all);
 int					init_forks(t_phils ***phils);
 void				to_end(t_phils ***phils, t_all *all);
+int					my_error_all(t_all *all);
 
 #endif

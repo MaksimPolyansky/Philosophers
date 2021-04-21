@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 08:48:47 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/20 21:37:19 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/21 21:12:00 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int	init_print(t_phils ***phils, t_all *all)
 		// (*phils)[p]->eat = w;
 		(*phils)[p]->start_t = start;
 	}
+	(*all).all_pid = malloc(sizeof(pid_t) * (*all).phils + 1);
+	if (!(*all).all_pid)
+		return ((int)my_errors(&(*phils), "Bad malloc print!") + my_error_all(&(*all)));
 	p = -1;
 	while (++p < (int)all->phils)
 	{
@@ -110,7 +113,8 @@ void	to_go(t_phils **phils)
 		exit(21);
 	while (1)
 	{
-		if ((*phils)->count_eat == (*phils)->num_eat && (*phils)->num_eat != -1)
+		run((*phils));
+		if ((*phils)->count_eat == (*phils)->num_eat)
 			exit(42);
 	}
 
