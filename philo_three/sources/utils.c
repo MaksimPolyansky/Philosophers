@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:26:10 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/21 20:23:16 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:01:26 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	print_info(t_phils *phil, char *line)
 	sem_wait(phil->print_sem);
 	if (phil->die == 1)
 	{
-		sem_post(phil->print_sem);
+		printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);
+		// sem_post(phil->print_sem);
 		return ;
 	}
 	printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);

@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:30:28 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/21 21:07:46 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:01:22 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	*died(void *data)
 	// pthread_create(&phil->thread, NULL, run, phil);
 	while (1)
 	{
-		usleep(100);
-		if ((my_time() - phil->end_eat) > phil->time_to_die * 1000)
+		usleep(10);
+		if ((my_time() - phil->end_eat) > phil->time_to_die)
 		{
-			print_info(phil, "died");
 			phil->die = 1;
-			pthread_detach(phil->thread);
+			print_info(phil, "died");
+			pthread_detach(phil->thread_d);
 			exit(21);
 		}
 		// if (phil->die)

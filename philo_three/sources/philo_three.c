@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 09:08:58 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/21 21:11:30 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 19:05:54 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ int	main(int ac, char **av)
 	if (!init_forks(&phils) || !init_print(&phils, &all))
 		exit(1);
 	my_free(&phils);
-	return (EXIT_SUCCESS);
+	return (my_error_all(&all));
 }
