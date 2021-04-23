@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:26:10 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/22 20:01:26 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:13:28 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ size_t	my_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+int		ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned char	*str1;
 	unsigned char	*str2;
@@ -50,7 +50,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int	ft_atoi(char *str)
+int		ft_atoi(char *str)
 {
 	int			i;
 	int			p;
@@ -78,7 +78,6 @@ void	print_info(t_phils *phil, char *line)
 	if (phil->die == 1)
 	{
 		printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);
-		// sem_post(phil->print_sem);
 		return ;
 	}
 	printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);

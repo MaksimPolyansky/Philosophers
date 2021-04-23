@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 09:08:58 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/22 19:05:54 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:24:01 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ void	my_free(t_phils ***phils)
 	{
 		sem_close((*phils)[0]->print_sem);
 		sem_close((*phils)[0]->forks);
-		// if ((*phils)[0]->die)
-		// 	free((*phils)[0]->die);
-		// if ((*phils)[0]->eat)
-		// 	free((*phils)[0]->eat);
 		while (--i)
 		{
 			if ((*phils)[i])
@@ -50,7 +46,7 @@ void	to_eat(t_phils **phil)
 		exit(42);
 }
 
-void	run(t_phils	*phil)
+void	run(t_phils *phil)
 {
 	phil->end_eat = my_time();
 	if (phil->pos % 2)
@@ -61,6 +57,8 @@ void	run(t_phils	*phil)
 		to_eat(&phil);
 		print_info(phil, "is sleeping");
 		usleep(phil->time_to_sleep * 1000);
+		if ((*phil).count_eat == (*phil).num_eat)
+			exit(42);
 	}
 }
 
@@ -70,7 +68,7 @@ void	my_clear(t_all *all)
 	(*all).phils = 0;
 }
 
-int	main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_phils	**phils;
 	t_all	all;

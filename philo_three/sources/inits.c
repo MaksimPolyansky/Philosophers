@@ -6,13 +6,13 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 08:48:47 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/21 21:12:00 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:21:08 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_three.h"
 
-int	init_forks(t_phils ***phils)
+int		init_forks(t_phils ***phils)
 {
 	int		i;
 
@@ -33,30 +33,10 @@ int	init_forks(t_phils ***phils)
 	return (1);
 }
 
-int	init_print(t_phils ***phils, t_all *all)
+void	whihle_print(t_phils ***phils, t_all *all)
 {
-	// int		*d;
-	// int		*w;
-	size_t	start;
 	int		p;
 
-	// d = (int *)malloc(sizeof(int));
-	// w = (int *)malloc(sizeof(int));
-	// if (d == 0 || w == 0)
-	// 	return ((int)my_errors(&(*phils), "Bad malloc print!"));
-	// *d = 0;
-	// *w = 0;
-	p = -1;
-	start = my_time();
-	while (++p < (*phils)[0]->num_of_phil)
-	{
-		// (*phils)[p]->die = d;
-		// (*phils)[p]->eat = w;
-		(*phils)[p]->start_t = start;
-	}
-	(*all).all_pid = malloc(sizeof(pid_t) * (*all).phils + 1);
-	if (!(*all).all_pid)
-		return ((int)my_errors(&(*phils), "Bad malloc print!") + my_error_all(&(*all)));
 	p = -1;
 	while (++p < (int)all->phils)
 	{
@@ -73,6 +53,21 @@ int	init_print(t_phils ***phils, t_all *all)
 			exit(21);
 		}
 	}
+}
+
+int		init_print(t_phils ***phils, t_all *all)
+{
+	size_t	start;
+	int		p;
+
+	p = -1;
+	start = my_time();
+	while (++p < (*phils)[0]->num_of_phil)
+		(*phils)[p]->start_t = start;
+	(*all).all_pid = malloc(sizeof(pid_t) * (*all).phils + 1);
+	if (!(*all).all_pid)
+		return ((int)my_errors(&(*phils), "Bad malloc print!") + my_error_all(&(*all)));
+	whihle_print(&(*phils), &(*all));
 	to_end(&(*phils), &(*all));
 	return (1);
 }
@@ -107,8 +102,6 @@ void	to_end(t_phils ***phils, t_all *all)
 
 void	to_go(t_phils **phils)
 {
-	// int		z;
-
 	if (pthread_create(&(*phils)->thread_d, NULL, died, (*phils)))
 		exit(21);
 	while (1)
@@ -117,19 +110,5 @@ void	to_go(t_phils **phils)
 		if ((*phils)->count_eat == (*phils)->num_eat)
 			exit(42);
 	}
-
-
-	// z = -1;
-	// while (++z < (*phils)->num_of_phil)
-	// {
-	// 	if (pthread_join((*phils)->thread_d, NULL))
-	// 		return ((int)my_errors(&(*phils), "Bad pthread join!"));
-	// }
-	// z = -1;
-	// while (++z < (*phils)[0]->num_of_phil)
-	// {
-	// 	if (sem_post((*phils)[0]->forks) || sem_post(((*phils)[0]->print_sem)))
-	// 		return ((int)my_errors(&(*phils), "Bad sem post!"));
-	// }
 	exit(0);
 }

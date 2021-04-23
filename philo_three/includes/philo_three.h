@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/22 20:02:14 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:13:51 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 # include <signal.h>
 # include <sys/wait.h>
 
-typedef struct s_all
+typedef struct		s_all
 {
 	pid_t			*all_pid;
 	size_t			phils;
 }					t_all;
 
-typedef struct s_phils
+typedef struct		s_phils
 {
 	int				pos;
 	int				num_of_phil;
@@ -40,7 +40,6 @@ typedef struct s_phils
 	int				num_eat;
 	int				count_eat;
 	int				die;
-	// int				*eat;
 	size_t			start_t;
 	size_t			end_eat;
 	pthread_t		thread;

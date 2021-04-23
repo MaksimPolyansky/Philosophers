@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 05:13:24 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/21 20:23:29 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:11:11 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ int	my_errors(t_phils ***phils, char *line)
 	{
 		sem_close((*phils)[0]->print_sem);
 		sem_close((*phils)[0]->forks);
-		// if ((*phils)[0]->die)
-		// 	free((*phils)[0]->die);
-		// if ((*phils)[0]->eat)
-		// 	free((*phils)[0]->eat);
 		while (--i)
 		{
 			if ((*phils)[i])

@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:29:15 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/22 19:57:12 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/22 20:10:38 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	my_zero(t_phils **phil, int ac, char **av)
 		(*phil)->num_eat = -1;
 	(*phil)->count_eat = 0;
 	(*phil)->die = 0;
-	// (*phil)->eat = NULL;
 	(*phil)->print_sem = NULL;
 	(*phil)->forks = NULL;
 	return (1);
@@ -53,7 +52,6 @@ int	parse(t_phils ***phils, int ac, char **av)
 				return (my_errors(&(*phils), "Bad malloc!"));
 			(*phils)[i]->pos = i;
 		}
-		tmp = 0;
 	}
 	else
 		return (error_arg("Bad arguments!"));
