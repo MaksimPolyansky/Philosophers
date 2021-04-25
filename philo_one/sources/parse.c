@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:21:52 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 21:06:57 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/25 04:15:50 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	my_zero(t_phils **phil, int ac, char **av)
 	if (ac == 6)
 		(*phil)->num_eat = ft_atoi(av[5]);
 	else
-		(*phil)->num_eat = 0;
+		(*phil)->num_eat = -1;
 	(*phil)->count_eat = 0;
 	(*phil)->lfork = NULL;
 	(*phil)->rfork = NULL;

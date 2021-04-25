@@ -4,7 +4,7 @@ HEADER		=	./includes/philo_one.h
 
 CC			=	gcc
 
-FLAGS		=	-Werror -Wall -Wextra -pthread
+FLAGS		=	-g -Werror -Wall -Wextra -pthread
 
 SRCS		=	./sources/philo_one.c \
 				./sources/died.c \

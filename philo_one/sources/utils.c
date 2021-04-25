@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:15:48 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 09:34:30 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/25 04:02:57 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ size_t	my_time(void)
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+void	upgrade_usleep(double msec)
+{
+	size_t	start;
+
+	start = my_time();
+	while (my_time() - start < msec)
+		usleep(100);
 }
 
 int	ft_strlen(char *str)
@@ -70,16 +79,4 @@ int	ft_atoi(char *str)
 	if (p == 0)
 		return (-1);
 	return (res);
-}
-
-void	print_info(t_phils *phil, char *line)
-{
-	pthread_mutex_lock(phil->print_mutex);
-	if (*phil->die == 1)
-	{
-		pthread_mutex_unlock(phil->print_mutex);
-		return ;
-	}
-	printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);
-	pthread_mutex_unlock(phil->print_mutex);
 }

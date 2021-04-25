@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 01:52:40 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 21:06:38 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/25 04:07:17 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+int					g_die;
+int					g_total_eat;
 
 typedef struct s_fork
 {
@@ -60,5 +63,6 @@ int					init_forks(t_phils ***phils);
 int					init_print(t_phils ***phils);
 int					to_go(t_phils ***phils);
 void				*run(void *data);
+void				upgrade_usleep(double msec);
 
 #endif

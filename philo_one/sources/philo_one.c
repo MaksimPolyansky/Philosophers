@@ -6,11 +6,23 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 06:47:34 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 07:30:51 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/25 04:55:08 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_one.h"
+
+void	print_info(t_phils *phil, char *line)
+{
+	pthread_mutex_lock(phil->print_mutex);
+	if (*phil->die == 1)
+	{
+		pthread_mutex_unlock(phil->print_mutex);
+		return ;
+	}
+	printf("%lu %d %s\n", my_time() - phil->start_t, phil->pos + 1, line);
+	pthread_mutex_unlock(phil->print_mutex);
+}
 
 void	my_free(t_phils ***phils)
 {
@@ -41,11 +53,12 @@ void	to_eat(t_phils **phil)
 	pthread_mutex_lock(&(*phil)->lfork->mutex_f);
 	pthread_mutex_lock(&(*phil)->rfork->mutex_f);
 	print_info((*phil), "has taken a forks");
+	++g_total_eat;
 	(*phil)->lfork->fork = 0;
 	(*phil)->rfork->fork = 0;
 	(*phil)->end_eat = my_time() - (*phil)->start_t;
 	print_info((*phil), "is eating");
-	usleep((*phil)->time_to_eat * 1000);
+	upgrade_usleep((*phil)->time_to_eat);
 	(*phil)->lfork->fork = 1;
 	(*phil)->rfork->fork = 1;
 	pthread_mutex_unlock(&(*phil)->lfork->mutex_f);
@@ -68,7 +81,7 @@ void	*run(void *data)
 		if (phil->count_eat == phil->num_eat)
 			(*phil->eat)++;
 		print_info(phil, "is sleeping");
-		usleep(phil->time_to_sleep * 1000);
+		upgrade_usleep(phil->time_to_sleep);
 	}
 	return (NULL);
 }

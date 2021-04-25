@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 06:43:56 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/18 21:07:21 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/25 04:57:56 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,38 @@ int	init_print(t_phils ***phils)
 	return (1);
 }
 
+void	*check_status(t_phils ***phils)
+{
+	int	i;
+
+	i = 0;
+	while ((g_total_eat / (*phils)[0]->num_of_phil < (*phils)[0]->num_eat \
+		|| (*phils)[0]->num_eat == -1) && !g_die)
+	{
+		if (i == (*phils)[0]->num_of_phil - 1)
+			i = 0;
+		died((*phils)[i]);
+		i++;
+		upgrade_usleep(0.1);
+	}
+	return (NULL);
+}
+
 int	to_go(t_phils ***phils)
 {
-	int		k;
-	int		z;
+	int	i;
 
-	k = -1;
-	while (++k < (*phils)[0]->num_of_phil)
+	i = 0;
+	while (i < (*phils)[0]->num_of_phil)
 	{
-		if (pthread_create(&(*phils)[k]->thread_d, NULL, died, (*phils)[k]))
-			return (my_errors(&(*phils), "Bad pthread create!"));
+		pthread_create(&(*phils)[i]->thread, NULL, run, (*phils)[i]);
+		i++;
 	}
-	z = -1;
-	while (++z < (*phils)[0]->num_of_phil)
+	check_status(&(*phils));
+	i = 0;
+	while (i < (*phils)[0]->num_of_phil)
 	{
-		if (pthread_join((*phils)[z]->thread_d, NULL))
+		if (pthread_detach((*phils)[i++]->thread))
 			return (my_errors(&(*phils), "Bad pthread join!"));
 	}
 	return (1);
