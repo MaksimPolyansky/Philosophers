@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 09:08:58 by heusebio          #+#    #+#             */
-/*   Updated: 2021/04/22 20:24:01 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/04/25 05:15:44 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	my_clear(t_all *all)
 	(*all).phils = 0;
 }
 
-int		main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_phils	**phils;
 	t_all	all;

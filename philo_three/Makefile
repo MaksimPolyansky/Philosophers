@@ -1,10 +1,10 @@
-NAME		=	philo_tri
+NAME		=	philo_three
 
 HEADER		=	./includes/philo_three.h
 
 CC			=	gcc
 
-FLAGS		=	-Werror -Wall -Wextra -pthread
+FLAGS		=	-g -Werror -Wall -Wextra -pthread
 
 SRCS		=	./sources/philo_three.c \
 				./sources/died.c \
